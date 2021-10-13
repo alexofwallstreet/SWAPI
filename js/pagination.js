@@ -4,7 +4,7 @@ export default class Pagination {
 
         for (let i = 1; i <= total; i++) {
 
-            if (i === current) {
+            if (i == current) {
                 paginationHTML += `
                     <li class="page-item active" aria-current="page">
                         <span class="page-link">${i}</span>
@@ -14,7 +14,7 @@ export default class Pagination {
             }
 
             paginationHTML += `
-                <li class="page-item"><a class="page-link" href="#">${i}</a></li>
+                <li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>
             `
         }
 
