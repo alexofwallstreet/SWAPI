@@ -1,0 +1,53 @@
+:root {
+    --main-bg-color: #353184;
+    --main-txt-color: #ffe500;
+}
+
+@font-face {
+    font-family: Starjhol;
+    src: url(../fonts/Starjhol.ttf);
+}
+
+@font-face {
+    font-family: Starjedi;
+    src: url(../fonts/Starjedi.ttf);
+}
+
+html {
+    font-size: 22px;
+}
+
+.promo {
+    min-height: 100vh;
+    background: url("../img/background.jpg") center center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.promo h1 {
+    font-family: Starjhol;
+    font-size: 10em;
+    color: var(--main-txt-color);
+}
+
+.content {
+    min-height: 100vh;
+}
+
+.content__list {
+    margin-top: 40px;
+}
+.nav-link {
+    font-family: Starjedi;
+}
+
+.nav-link .active {
+    color: var(--main-txt-color) !important;
+}
+
+@media (max-width: 769px) {
+    .promo h1 {
+        font-size: 3em;
+    }
+}
