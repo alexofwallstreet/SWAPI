@@ -4,8 +4,13 @@ export default class Item {
 
         arr.forEach((item, idx) => {
             const ul = Object.entries(item).reduce((html, li) => {
-                if (li[0] !== "id") {
-                    html += `<li>${li[0]}: ${li[1]}</li>`
+                if (li[0] !== "id" && li[0] !== "header") {
+                    html += `
+                        <li>
+                            <span class="item-prop">${li[0]}: </span>
+                            ${li[1]}
+                        </li>
+                    `
                 }
                 return html;
             }, "")
@@ -17,12 +22,12 @@ export default class Item {
                         <a class="btn btn-primary w-100 card-title" data-bs-toggle="collapse"
                             href="#collapseExample${idx}" role="button" aria-expanded="false"
                             aria-controls="collapseExample${idx}">
-                            ${item.name}
+                            ${item.header}
                         </a>
                         <div class="collapse" id="collapseExample${idx}">
                             <p class="card-text">
                             <div class="card card-body">
-                                <ul>
+                                <ul class="card-list">
                                 ${ul}
                                 </ul>
                             </div>

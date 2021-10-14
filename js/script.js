@@ -23,9 +23,26 @@ let currentTopic = 'people';
 
 
 async function getItemsToShow(topic = "films", page = 1) {
+
     switch (topic) {
+
+        case 'films': {
+            return swapi.getAllFilms(page);
+        }
         case 'people': {
             return swapi.getAllPeople(page);
+        }
+        case 'starships': {
+            return swapi.getAllStarships(page);
+        }
+        case 'vehicles': {
+            return swapi.getAllVehicles(page);
+        }
+        case 'species': {
+            return swapi.getAllSpecies(page);
+        }
+        case 'planets': {
+            return swapi.getAllPlanets(page);
         }
     }
 }
@@ -59,12 +76,6 @@ function refreshContent() {
 }
 
 
-await changeTopic('people');
-
-
-console.log(itemsToShow);
-
-
 navbar.addEventListener("click", (e) => {
     if (e.target.tagName === "A") {
         e.preventDefault();
@@ -88,6 +99,8 @@ paginationHTML.addEventListener("click", (e) => {
     }
 });
 
+
+await changeTopic('films');
 
 
 

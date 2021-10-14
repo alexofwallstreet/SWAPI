@@ -46,6 +46,37 @@ html {
     color: var(--main-txt-color) !important;
 }
 
+.card-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.card-list li {
+    border-bottom: 1px solid #ccc;
+    text-decoration: none;
+    color: #000;
+    transition: font-size 0.3s ease, background-color 0.3s ease;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.card-list li:last-child {
+    border: none;
+}
+
+.card-list li:hover {
+    background: #f6f6f6;
+    cursor: default;
+}
+
+.item-prop {
+    display: block;
+    font-size: 25px;
+    font-weight: bold;
+}
+
 @media (max-width: 769px) {
     .promo h1 {
         font-size: 3em;
