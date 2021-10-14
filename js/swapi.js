@@ -67,6 +67,50 @@ export default class Swapi {
         };
     };
 
+    getSearchResults = async (topic, search, page) => {
+        const res = await this.getResource(`/${topic}/?search=${search}&page=${page}`);
+
+        switch (topic) {
+
+            case 'films': {
+                return {
+                    items: res.results.map(film => this.parseFilm(film)),
+                    pages: this.getPages(res.count)
+                };
+            }
+            case 'people': {
+                return {
+                    items: res.results.map(person => this.parsePerson(person)),
+                    pages: this.getPages(res.count)
+                };
+            }
+            case 'starships': {
+                return {
+                    items: res.results.map(starship => this.parseStarship(starship)),
+                    pages: this.getPages(res.count)
+                };
+            }
+            case 'vehicles': {
+                return {
+                    items: res.results.map(vehicle => this.parseVehicle(vehicle)),
+                    pages: this.getPages(res.count)
+                };
+            }
+            case 'species': {
+                return {
+                    items: res.results.map(species => this.parseSpecies(species)),
+                    pages: this.getPages(res.count)
+                };
+            }
+            case 'planets': {
+                return {
+                    items: res.results.map(planet => this.parsePlanet(planet)),
+                    pages: this.getPages(res.count)
+                };
+            }
+        }
+    };
+
 
     getItemId = (item) => {
         const idRegExp = /\/([0-9]*)\/$/;

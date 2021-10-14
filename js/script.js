@@ -15,6 +15,8 @@ const preloader = new Preloader();
 const paginationHTML = document.querySelector(".pagination");
 const contentList = document.querySelector('.content__list');
 const navbar = document.querySelector('.navbar-nav');
+const btnSearch = document.querySelector(".btn-search");
+const inputSearch = document.querySelector(".input-search");
 
 //Global Variables
 let itemsToShow = [];
@@ -46,18 +48,23 @@ async function getItemsToShow(topic = "films", page = 1) {
         case 'planets': {
             return swapi.getAllPlanets(page);
         }
+        case 'search': {
+            return swapi.getSearchResults(currentTopic, inputSearch.value, page);
+        }
     }
 }
 
-async function changeTopic(targetTopic) {
+async function changeTopic(targetTopic, isSearch = false) {
 
     showPreloader();
 
     const res = await getItemsToShow(targetTopic, 1);
-    currentTopic = targetTopic;
+
+    currentTopic = isSearch ? currentTopic : targetTopic;
     itemsToShow = res.items;
     totalPages = res.pages;
     currentPage = 1;
+
 
     refreshContent();
     refreshPagination();
@@ -110,6 +117,11 @@ paginationHTML.addEventListener("click", (e) => {
         changePage(e.target.dataset.page);
     }
 });
+
+btnSearch.addEventListener("click", (e) => {
+    e.preventDefault();
+    changeTopic('search', true);
+})
 
 
 await changeTopic('films');
