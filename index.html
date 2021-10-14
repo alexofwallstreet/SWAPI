@@ -54,14 +54,19 @@
 
 
         <div class="container">
-            <div class="content__list row row-cols-1 row-cols-md-2 g-4">
-                <!-- There is place for Items from SWAPI-->
-            </div>
-
-            <div class="pagination-area mt-3">
-                <ul class="pagination">
+            <form class="row form-inline mt-5">
+                <div class="col-md-8">
+                    <input class="col-md-8 form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                </div>
+                <button class="col-md-4 btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <div class="pagination-area mt-5">
+                <ul class="pagination flex-wrap">
                     <!-- There is place for Pagination li-->
                 </ul>
+            </div>
+            <div class="content__list row row-cols-1 row-cols-md-2 g-4">
+                <!-- There is place for Items from SWAPI-->
             </div>
         </div>
 

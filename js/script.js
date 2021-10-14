@@ -4,10 +4,12 @@
 import Swapi from "./swapi.js";
 import Pagination from "./pagination.js";
 import Item from "./item.js";
+import Preloader from "./preloader.js";
 
 const swapi = new Swapi();
 const pagination = new Pagination();
 const item = new Item();
+const preloader = new Preloader();
 
 //DOM Elements
 const paginationHTML = document.querySelector(".pagination");
@@ -48,6 +50,9 @@ async function getItemsToShow(topic = "films", page = 1) {
 }
 
 async function changeTopic(targetTopic) {
+
+    showPreloader();
+
     const res = await getItemsToShow(targetTopic, 1);
     currentTopic = targetTopic;
     itemsToShow = res.items;
@@ -59,6 +64,9 @@ async function changeTopic(targetTopic) {
 }
 
 async function changePage(page) {
+
+    showPreloader();
+
     const res = await getItemsToShow(currentTopic, page);
     itemsToShow = res.items;
     currentPage = page;
@@ -73,6 +81,10 @@ function refreshPagination() {
 
 function refreshContent() {
     contentList.innerHTML = item.render(itemsToShow);
+}
+
+function showPreloader() {
+    contentList.innerHTML = preloader.render();
 }
 
 
