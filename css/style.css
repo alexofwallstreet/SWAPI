@@ -21,13 +21,52 @@ html {
     min-height: 100vh;
     background: url("../img/background.jpg") center center/cover no-repeat;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 4rem 1rem;
+}
+
+.promo__content {
+    transform: translate(0, -5rem);
 }
 
 .promo h1 {
     font-family: Starjhol;
     font-size: 10em;
+    color: var(--main-txt-color);
+    text-align: center;
+}
+
+.subheader {
+    text-align: center;
+    font-family: Starjedi;
+    font-size: 2em;
+    letter-spacing: 0.3em;
+    color: var(--main-txt-color);
+}
+
+.subheader span {
+    text-transform: uppercase;
+    font-size: 1.4em;
+}
+
+.slide {
+    position: absolute;
+    bottom: 2rem;
+    animation: zooming 7s infinite ease-in-out;
+}
+
+.slide a {
+    color: #fff;
+    font-size: 6rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.5s ease;
+}
+
+.slide a:hover {
+    font-size: 10rem;
     color: var(--main-txt-color);
 }
 
@@ -78,8 +117,41 @@ html {
     font-weight: bold;
 }
 
+@keyframes zooming {
+    0% {
+        transform: scale(1) rotate(90deg);
+    }
+    33% {
+        transform: scale(1.2) rotate(92deg);
+    }
+    100% {
+        transform: scale(1) rotate(90deg);
+    }
+}
+
+@media (max-width: 1025px) {
+    .promo h1 {
+        font-size: 10em;
+    }
+    .subheader {
+        font-size: 1.3em;
+    }
+}
+
 @media (max-width: 769px) {
     .promo h1 {
+        font-size: 5em;
+    }
+    .subheader {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 425px) {
+    .promo h1 {
         font-size: 3em;
+    }
+    .subheader {
+        font-size: 0.4em;
     }
 }
