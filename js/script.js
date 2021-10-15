@@ -23,6 +23,7 @@ let itemsToShow = [];
 let currentPage = 1;
 let totalPages = 1;
 let currentTopic = 'people';
+let currentSearch = false;
 
 
 
@@ -54,33 +55,23 @@ async function getItemsToShow(topic = "films", page = 1) {
     }
 }
 
-async function changeTopic(targetTopic, isSearch = false) {
+async function changeTopic(targetTopic, page = 1, isSearch = false) {
 
     showPreloader();
 
-    const res = await getItemsToShow(targetTopic, 1);
+    const res = isSearch ? await getItemsToShow("search", page) : await getItemsToShow(targetTopic, page);
 
+    currentSearch = isSearch;
     currentTopic = isSearch ? currentTopic : targetTopic;
     itemsToShow = res.items;
     totalPages = res.pages;
-    currentPage = 1;
-
-
-    refreshContent();
-    refreshPagination();
-}
-
-async function changePage(page) {
-
-    showPreloader();
-
-    const res = await getItemsToShow(currentTopic, page);
-    itemsToShow = res.items;
     currentPage = page;
 
+
     refreshContent();
     refreshPagination();
 }
+
 
 function refreshPagination() {
     paginationHTML.innerHTML = pagination.render(totalPages, currentPage);
@@ -94,33 +85,33 @@ function showPreloader() {
     contentList.innerHTML = preloader.render();
 }
 
+function resetActiveLink() {
+    navbar.querySelectorAll("a").forEach(a => {
+        a.classList.remove("active");
+    })
+}
+
 
 navbar.addEventListener("click", (e) => {
     if (e.target.tagName === "A") {
-        e.preventDefault();
 
+        e.preventDefault();
         resetActiveLink();
         e.target.classList.add("active");
         changeTopic(e.target.dataset.topic);
-
-        function resetActiveLink() {
-            navbar.querySelectorAll("a").forEach(a => {
-                a.classList.remove("active");
-            })
-        }
     }
 });
 
 paginationHTML.addEventListener("click", (e) => {
     if (e.target.tagName === "A") {
         e.preventDefault();
-        changePage(e.target.dataset.page);
+        changeTopic(currentTopic, e.target.dataset.page, currentSearch);
     }
 });
 
 btnSearch.addEventListener("click", (e) => {
     e.preventDefault();
-    changeTopic('search', true);
+    changeTopic(currentTopic, 1, true);
 })
 
 
