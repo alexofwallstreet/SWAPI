@@ -1,10 +1,10 @@
 "use strict";
 
 //Modules
-import Swapi from "./swapi.js";
-import Pagination from "./pagination.js";
-import Item from "./item.js";
-import Preloader from "./preloader.js";
+import Swapi from "./components/swapi.js";
+import Pagination from "./components/pagination.js";
+import Item from "./components/item.js";
+import Preloader from "./components/preloader.js";
 
 const swapi = new Swapi();
 const pagination = new Pagination();
@@ -66,7 +66,6 @@ async function changeTopic(targetTopic, page = 1, isSearch = false) {
     itemsToShow = res.items;
     totalPages = res.pages;
     currentPage = page;
-
 
     refreshContent();
     refreshPagination();
