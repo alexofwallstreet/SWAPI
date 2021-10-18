@@ -57,6 +57,7 @@ async function getItemsToShow(topic = "films", page = 1) {
 
 async function changeTopic(targetTopic, page = 1, isSearch = false) {
 
+    hidePagination();
     showPreloader();
 
     const res = isSearch ? await getItemsToShow("search", page) : await getItemsToShow(targetTopic, page);
@@ -76,6 +77,10 @@ function refreshPagination() {
     paginationHTML.innerHTML = pagination.render(totalPages, currentPage);
 }
 
+function hidePagination() {
+    paginationHTML.innerHTML = "";
+}
+
 function refreshContent() {
     contentList.innerHTML = item.render(itemsToShow);
 }
@@ -83,6 +88,8 @@ function refreshContent() {
 function showPreloader() {
     contentList.innerHTML = preloader.render();
 }
+
+
 
 function resetActiveLink() {
     navbar.querySelectorAll("a").forEach(a => {
