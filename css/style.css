@@ -22,13 +22,9 @@ html {
     background: url("../img/background.jpg") center center/cover no-repeat;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 4rem 1rem;
-}
-
-.promo__content {
-    transform: translate(0, -5rem);
 }
 
 .promo h1 {
@@ -52,12 +48,7 @@ html {
 }
 
 .slide {
-    position: absolute;
-    bottom: 2rem;
     animation: zooming 7s infinite ease-in-out;
-}
-
-.slide a {
     color: #fff;
     font-size: 6rem;
     cursor: pointer;
@@ -65,8 +56,8 @@ html {
     transition: all 0.5s ease;
 }
 
-.slide a:hover {
-    font-size: 10rem;
+.slide:hover {
+    font-size: 7rem;
     color: var(--main-txt-color);
 }
 
