@@ -24,6 +24,7 @@ let currentPage = 1;
 let totalPages = 1;
 let currentTopic = 'people';
 let currentSearch = false;
+let isLoading = false;
 
 
 
@@ -57,8 +58,8 @@ async function getItemsToShow(topic = "films", page = 1) {
 
 async function changeTopic(targetTopic, page = 1, isSearch = false) {
 
-    hidePagination();
     showPreloader();
+    isLoading = true;
 
     const res = isSearch ? await getItemsToShow("search", page) : await getItemsToShow(targetTopic, page);
 
@@ -70,6 +71,7 @@ async function changeTopic(targetTopic, page = 1, isSearch = false) {
 
     refreshContent();
     refreshPagination();
+    isLoading = false;
 }
 
 
@@ -89,8 +91,6 @@ function showPreloader() {
     contentList.innerHTML = preloader.render();
 }
 
-
-
 function resetActiveLink() {
     navbar.querySelectorAll("a").forEach(a => {
         a.classList.remove("active");
@@ -99,18 +99,20 @@ function resetActiveLink() {
 
 
 navbar.addEventListener("click", (e) => {
-    if (e.target.tagName === "A") {
-
+    if (e.target.tagName === "A" && !isLoading) {
         e.preventDefault();
         resetActiveLink();
+        hidePagination();
         e.target.classList.add("active");
         changeTopic(e.target.dataset.topic);
     }
 });
 
 paginationHTML.addEventListener("click", (e) => {
-    if (e.target.tagName === "A") {
+    if (e.target.tagName === "A" && !isLoading) {
         e.preventDefault();
+        document.querySelector('.pagination-active').classList.remove('active');
+        e.target.closest('li').classList.add("active");
         changeTopic(currentTopic, e.target.dataset.page, currentSearch);
     }
 });

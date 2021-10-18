@@ -6,7 +6,7 @@ export default class Pagination {
 
             if (i == current) {
                 paginationHTML += `
-                    <li class="page-item active" aria-current="page">
+                    <li class="page-item pagination-active active" aria-current="page">
                         <span class="page-link">${i}</span>
                     </li>
                 `;
@@ -14,7 +14,7 @@ export default class Pagination {
             }
 
             paginationHTML += `
-                <li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>
+                <li class="page-item"><a class="page-link" data-page="${i}">${i}</a></li>
             `
         }
 

@@ -19,7 +19,7 @@ html {
 
 .promo {
     min-height: 100vh;
-    background: url("../img/background.jpg") center center/cover no-repeat;
+    background: var(--main-bg-color) url("../img/background.jpg") center center/cover no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -69,12 +69,21 @@ html {
 .content__list {
     margin-top: 40px;
 }
-.nav-link {
+.nav-link,
+.page-link {
     font-family: Starjedi;
+    cursor: pointer;
+}
+.page-link {
+    color: var(--main-bg-color);
 }
 
-.nav-link .active {
-    color: var(--main-txt-color) !important;
+.page-link:hover {
+    color: var(--main-bg-color);
+}
+
+.page-item.active .page-link {
+    background-color: var(--main-bg-color);
 }
 
 .card-list {
@@ -100,6 +109,21 @@ html {
 .card-list li:hover {
     background: #f6f6f6;
     cursor: default;
+}
+
+.card-title {
+    font-family: Starjedi;
+    letter-spacing: 0.15rem;
+    background-color: var(--main-bg-color);
+    border-color: var(--main-bg-color);
+}
+
+.card-title:hover {
+    background-color: #01090e;
+}
+
+.card-title:focus {
+    background-color: #01090e;
 }
 
 .item-prop {
