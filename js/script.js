@@ -2,14 +2,12 @@
 
 //Modules
 import Swapi from "./components/swapi.js";
-import Pagination from "./components/pagination.js";
-import Item from "./components/item.js";
-import Preloader from "./components/preloader.js";
+import renderPagination from "./components/render-pagination.js";
+import renderItems from "./components/render-item.js";
+import preloader from "./components/preloader.js";
+import { topics } from "./components/dictionaries.js";
 
 const swapi = new Swapi();
-const pagination = new Pagination();
-const item = new Item();
-const preloader = new Preloader();
 
 //DOM Elements
 const paginationHTML = document.querySelector(".pagination");
@@ -28,29 +26,29 @@ let isLoading = false;
 
 
 
-async function getItemsToShow(topic = "films", page = 1) {
+async function getItemsToShow(topic = topics.films, page = 1) {
 
     switch (topic) {
 
-        case 'films': {
+        case topics.films: {
             return swapi.getAllFilms(page);
         }
-        case 'people': {
+        case topics.people: {
             return swapi.getAllPeople(page);
         }
-        case 'starships': {
+        case topics.starships: {
             return swapi.getAllStarships(page);
         }
-        case 'vehicles': {
+        case topics.vehicles: {
             return swapi.getAllVehicles(page);
         }
-        case 'species': {
+        case topics.species: {
             return swapi.getAllSpecies(page);
         }
-        case 'planets': {
+        case topics.planets: {
             return swapi.getAllPlanets(page);
         }
-        case 'search': {
+        case topics.search: {
             return swapi.getSearchResults(currentTopic, inputSearch.value, page);
         }
     }
@@ -61,7 +59,7 @@ async function changeTopic(targetTopic, page = 1, isSearch = false) {
     showPreloader();
     isLoading = true;
 
-    const res = isSearch ? await getItemsToShow("search", page) : await getItemsToShow(targetTopic, page);
+    const res = isSearch ? await getItemsToShow(topics.search, page) : await getItemsToShow(targetTopic, page);
 
     currentSearch = isSearch;
     currentTopic = isSearch ? currentTopic : targetTopic;
@@ -76,7 +74,7 @@ async function changeTopic(targetTopic, page = 1, isSearch = false) {
 
 
 function refreshPagination() {
-    paginationHTML.innerHTML = pagination.render(totalPages, currentPage);
+    paginationHTML.innerHTML = renderPagination(totalPages, currentPage);
 }
 
 function hidePagination() {
@@ -84,46 +82,54 @@ function hidePagination() {
 }
 
 function refreshContent() {
-    contentList.innerHTML = item.render(itemsToShow);
+    contentList.innerHTML = renderItems(itemsToShow);
 }
 
 function showPreloader() {
-    contentList.innerHTML = preloader.render();
+    contentList.innerHTML = preloader;
 }
 
 function resetActiveLink() {
-    navbar.querySelectorAll("a").forEach(a => {
+    navbar.querySelectorAll(".topic-link").forEach(a => {
         a.classList.remove("active");
     })
 }
 
-
-navbar.addEventListener("click", (e) => {
-    if (e.target.tagName === "A" && !isLoading) {
+function navbarClickHandler(e) {
+    if (e.target.classList.contains(".topic-link") && !isLoading) {
         e.preventDefault();
         resetActiveLink();
         hidePagination();
         e.target.classList.add("active");
         changeTopic(e.target.dataset.topic);
     }
-});
+}
 
-paginationHTML.addEventListener("click", (e) => {
-    if (e.target.tagName === "A" && !isLoading) {
+function paginationClickHandler(e) {
+    if (e.target.classList.contains("pagaination-link") && !isLoading) {
         e.preventDefault();
         document.querySelector('.pagination-active').classList.remove('active');
         e.target.closest('li').classList.add("active");
         changeTopic(currentTopic, e.target.dataset.page, currentSearch);
     }
-});
+}
 
-btnSearch.addEventListener("click", (e) => {
+function searchClickHandler(e) {
     e.preventDefault();
     changeTopic(currentTopic, 1, true);
-})
+}
 
 
-await changeTopic('films');
+async function appInit() {
+    navbar.addEventListener("click", navbarClickHandler);
+    paginationHTML.addEventListener("click", paginationClickHandler);
+    btnSearch.addEventListener("click", searchClickHandler);
+    await changeTopic(topics.films);
+}
+
+appInit();
+
+
 
 
 

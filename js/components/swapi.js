@@ -1,23 +1,36 @@
+import { topics, keys } from "./dictionaries.js";
+
 export default class Swapi {
 
-    getResource = async (url) => {
-        const res = await fetch(`https://swapi.dev/api/${url}`);
+    constructor(baseURL = "https://swapi.dev/api", items_per_page = 10) {
+        this.baseURL = baseURL;
+        this.items_per_page = items_per_page;
+    }
 
-        if (!res.ok) {
-            throw new Error(`Could not fetch ${url}, status ${res.status}`)
+    getResource = async (url) => {
+
+        try {
+            const res = await fetch(`${this.baseURL}/${url}`);
+            if (!res.ok) {
+                throw new Error(`Could not fetch ${url}, status ${res.status}`)
+            }
+            return await res.json();
         }
-        return await res.json();
+
+        catch (err) {
+            alert(err);
+        }
     };
 
     getPages(count) {
-        return Math.ceil(count / 10);
+        return Math.ceil(count / this.items_per_page);
     }
 
     getAllPeople = async (page = 1) => {
         const res = await this.getResource(`/people/?page=${page}`);
 
         return {
-            items: res.results.map(person => this.parsePerson(person)),
+            items: res.results.map(this.parsePerson),
             pages: this.getPages(res.count)
         };
     };
@@ -26,7 +39,7 @@ export default class Swapi {
         const res = await this.getResource(`/films/?page=${page}`);
 
         return {
-            items: res.results.map(film => this.parseFilm(film)),
+            items: res.results.map(this.parseFilm),
             pages: this.getPages(res.count)
         };
     };
@@ -35,7 +48,7 @@ export default class Swapi {
         const res = await this.getResource(`/starships/?page=${page}`);
 
         return {
-            items: res.results.map(starship => this.parseStarship(starship)),
+            items: res.results.map(this.parseStarship),
             pages: this.getPages(res.count)
         };
     };
@@ -44,7 +57,7 @@ export default class Swapi {
         const res = await this.getResource(`/vehicles/?page=${page}`);
 
         return {
-            items: res.results.map(vehicle => this.parseVehicle(vehicle)),
+            items: res.results.map(this.parseVehicle),
             pages: this.getPages(res.count)
         };
     };
@@ -53,7 +66,7 @@ export default class Swapi {
         const res = await this.getResource(`/species/?page=${page}`);
 
         return {
-            items: res.results.map(species => this.parseSpecies(species)),
+            items: res.results.map(this.parseSpecies),
             pages: this.getPages(res.count)
         };
     };
@@ -62,7 +75,7 @@ export default class Swapi {
         const res = await this.getResource(`/planets/?page=${page}`);
 
         return {
-            items: res.results.map(species => this.parsePlanet(species)),
+            items: res.results.map(this.parsePlanet),
             pages: this.getPages(res.count)
         };
     };
@@ -72,39 +85,39 @@ export default class Swapi {
 
         switch (topic) {
 
-            case 'films': {
+            case topics.films: {
                 return {
-                    items: res.results.map(film => this.parseFilm(film)),
+                    items: res.results.map(this.parseFilm),
                     pages: this.getPages(res.count)
                 };
             }
-            case 'people': {
+            case topics.people: {
                 return {
-                    items: res.results.map(person => this.parsePerson(person)),
+                    items: res.results.map(this.parsePerson),
                     pages: this.getPages(res.count)
                 };
             }
-            case 'starships': {
+            case topics.starships: {
                 return {
-                    items: res.results.map(starship => this.parseStarship(starship)),
+                    items: res.results.map(this.parseStarship),
                     pages: this.getPages(res.count)
                 };
             }
-            case 'vehicles': {
+            case topics.vehicles: {
                 return {
-                    items: res.results.map(vehicle => this.parseVehicle(vehicle)),
+                    items: res.results.map(this.parseVehicle),
                     pages: this.getPages(res.count)
                 };
             }
-            case 'species': {
+            case topics.species: {
                 return {
-                    items: res.results.map(species => this.parseSpecies(species)),
+                    items: res.results.map(this.parseSpecies),
                     pages: this.getPages(res.count)
                 };
             }
-            case 'planets': {
+            case topics.planets: {
                 return {
-                    items: res.results.map(planet => this.parsePlanet(planet)),
+                    items: res.results.map(this.parsePlanet),
                     pages: this.getPages(res.count)
                 };
             }
@@ -119,73 +132,73 @@ export default class Swapi {
 
     parsePerson = (person) => {
         return {
-            id: this.getItemId(person),
-            name: person.name,
-            gender: person.gender,
-            "birth year": person.birth_year,
-            "eye colour": person.eye_color,
-            header: person.name
+            [keys.id]: this.getItemId(person),
+            [keys.name]: person.name,
+            [keys.gender]: person.gender,
+            [keys["birth year"]]: person.birth_year,
+            [keys["eye colour"]]: person.eye_color,
+            [keys.header]: person.name
         }
     }
 
     parseFilm = (film) => {
         return {
-            id: this.getItemId(film),
-            title: film.title,
-            director: film.director,
-            producer: film.producer,
-            "release date": film.release_date,
-            about: film.opening_crawl,
-            header: film.title,
+            [keys.id]: this.getItemId(film),
+            [keys.title]: film.title,
+            [keys.director]: film.director,
+            [keys.producer]: film.producer,
+            [keys["release date"]]: film.release_date,
+            [keys.about]: film.opening_crawl,
+            [keys.header]: film.title,
         }
     }
 
     parseStarship = (starship) => {
         return {
-            id: this.getItemId(starship),
-            name: starship.name,
-            length: starship.length,
-            passengers: starship.passengers,
-            class: starship.starship_class,
-            header: starship.name
+            [keys.id]: this.getItemId(starship),
+            [keys.name]: starship.name,
+            [keys.length]: starship.length,
+            [keys.passengers]: starship.passengers,
+            [keys.class]: starship.starship_class,
+            [keys.header]: starship.name
         }
     }
 
     parseVehicle = (vehicle) => {
         return {
-            id: this.getItemId(vehicle),
-            name: vehicle.name,
-            length: vehicle.length,
-            model: vehicle.model,
-            price: vehicle.cost_in_credits + " credits",
-            passengers: vehicle.passengers,
-            class: vehicle.vehicle_class,
-            header: vehicle.name
+            [keys.id]: this.getItemId(vehicle),
+            [keys.name]: vehicle.name,
+            [keys.length]: vehicle.length,
+            [keys.model]: vehicle.model,
+            [keys.price]: vehicle.cost_in_credits + " credits",
+            [keys.passengers]: vehicle.passengers,
+            [keys.class]: vehicle.vehicle_class,
+            [keys.header]: vehicle.name
         }
     }
 
     parseSpecies = (species) => {
         return {
-            id: this.getItemId(species),
-            name: species.name,
-            classification: species.classification,
-            language: species.language,
-            "hair color": species.hair_colors,
-            skin: species.skin_colors,
-            header: species.name
+            [keys.id]: this.getItemId(species),
+            [keys.name]: species.name,
+            [keys.classification]: species.classification,
+            [keys.language]: species.language,
+            [keys["hair color"]]: species.hair_colors,
+            [keys.skin]: species.skin_colors,
+            [keys.header]: species.name
         }
     }
 
     parsePlanet = (planet) => {
         return {
-            id: this.getItemId(planet),
-            name: planet.name,
-            diameter: planet.diameter,
-            "orbital period": planet.orbital_period,
-            gravity: planet.gravity,
-            population: planet.population,
-            terrain: planet.terrain,
-            header: planet.name
+            [keys.id]: this.getItemId(planet),
+            [keys.name]: planet.name,
+            [keys.diameter]: planet.diameter,
+            [keys["orbital period"]]: planet.orbital_period,
+            [keys.gravity]: planet.gravity,
+            [keys.population]: planet.population,
+            [keys.terrain]: planet.terrain,
+            [keys.header]: planet.name
         }
     }
 }

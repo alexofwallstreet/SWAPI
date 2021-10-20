@@ -1,6 +1,10 @@
 :root {
     --main-bg-color: #353184;
     --main-txt-color: #ffe500;
+    --card-bg-color: #01090e;
+    --card-bg-hover-color: #f6f6f6;
+    --arrow-color: #f6f6f6;
+    --card-border-color: #cccccc;
 }
 
 @font-face {
@@ -49,7 +53,7 @@ html {
 
 .slide {
     animation: zooming 7s infinite ease-in-out;
-    color: #fff;
+    color: var(--arrow-color);
     font-size: 6rem;
     cursor: pointer;
     text-decoration: none;
@@ -67,7 +71,7 @@ html {
 }
 
 .content__list {
-    margin-top: 40px;
+    margin-top: 2rem;
 }
 .nav-link,
 .page-link {
@@ -93,10 +97,10 @@ html {
 }
 
 .card-list li {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--card-border-color);
     text-decoration: none;
-    color: #000;
-    transition: font-size 0.3s ease, background-color 0.3s ease;
+    color: var(--card-bg-color);
+    transition: background-color 0.3s ease;
     display: block;
     width: 100%;
     margin-bottom: 10px;
@@ -107,7 +111,7 @@ html {
 }
 
 .card-list li:hover {
-    background: #f6f6f6;
+    background: var(--card-bg-hover-color);
     cursor: default;
 }
 
@@ -119,16 +123,16 @@ html {
 }
 
 .card-title:hover {
-    background-color: #01090e;
+    background-color: var(--card-bg-color);
 }
 
 .card-title:focus {
-    background-color: #01090e;
+    background-color: var(--card-bg-color);
 }
 
 .item-prop {
     display: block;
-    font-size: 25px;
+    font-size: 1.2rem;
     font-weight: bold;
 }
 
