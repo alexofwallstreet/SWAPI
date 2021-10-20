@@ -96,7 +96,7 @@ function resetActiveLink() {
 }
 
 function navbarClickHandler(e) {
-    if (e.target.classList.contains(".topic-link") && !isLoading) {
+    if (e.target.classList.contains("topic-link") && !isLoading) {
         e.preventDefault();
         resetActiveLink();
         hidePagination();
