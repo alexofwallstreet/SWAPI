@@ -8,18 +8,14 @@ export default class Swapi {
     }
 
     getResource = async (url) => {
-
-        try {
-            const res = await fetch(`${this.baseURL}/${url}`);
-            if (!res.ok) {
-                throw new Error(`Could not fetch ${url}, status ${res.status}`)
-            }
-            return await res.json();
+        const res = await fetch(`${this.baseURL}/${url}`);
+        if (!res.ok) {
+            Promise.reject(`Could not fetch ${url}, status ${res.status}`)
+                .catch(error => {
+                    console.error(error);
+                });
         }
-
-        catch (err) {
-            alert(err);
-        }
+        return await res.json();
     };
 
     getPages(count) {
@@ -27,7 +23,7 @@ export default class Swapi {
     }
 
     getAllPeople = async (page = 1) => {
-        const res = await this.getResource(`/people/?page=${page}`);
+        const res = await this.getResource(`/people/?page = ${page}`);
 
         return {
             items: res.results.map(this.parsePerson),
@@ -36,7 +32,7 @@ export default class Swapi {
     };
 
     getAllFilms = async (page = 1) => {
-        const res = await this.getResource(`/films/?page=${page}`);
+        const res = await this.getResource(`/films/?page = ${page}`);
 
         return {
             items: res.results.map(this.parseFilm),
@@ -45,7 +41,7 @@ export default class Swapi {
     };
 
     getAllStarships = async (page = 1) => {
-        const res = await this.getResource(`/starships/?page=${page}`);
+        const res = await this.getResource(`/starships/?page = ${page}`);
 
         return {
             items: res.results.map(this.parseStarship),
@@ -54,7 +50,7 @@ export default class Swapi {
     };
 
     getAllVehicles = async (page = 1) => {
-        const res = await this.getResource(`/vehicles/?page=${page}`);
+        const res = await this.getResource(`/vehicles/?page = ${page}`);
 
         return {
             items: res.results.map(this.parseVehicle),
@@ -63,7 +59,7 @@ export default class Swapi {
     };
 
     getAllSpecies = async (page = 1) => {
-        const res = await this.getResource(`/species/?page=${page}`);
+        const res = await this.getResource(`/species/?page = ${page}`);
 
         return {
             items: res.results.map(this.parseSpecies),
@@ -72,7 +68,7 @@ export default class Swapi {
     };
 
     getAllPlanets = async (page = 1) => {
-        const res = await this.getResource(`/planets/?page=${page}`);
+        const res = await this.getResource(`/planets/?page = ${page}`);
 
         return {
             items: res.results.map(this.parsePlanet),
