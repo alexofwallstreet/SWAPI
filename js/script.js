@@ -56,13 +56,16 @@ async function getItemsToShow(topic = topics.films, page = 1) {
 
 async function changeTopic(targetTopic, page = 1, isSearch = false) {
 
-    showPreloader();
-    isLoading = true;
-
     try {
+        showPreloader();
+        isLoading = true;
         const res = isSearch ? await getItemsToShow(topics.search, page) : await getItemsToShow(targetTopic, page);
         itemsToShow = res.items;
         totalPages = res.pages;
+        currentSearch = isSearch;
+        currentTopic = isSearch ? currentTopic : targetTopic;
+        currentPage = page;
+        isLoading = false;
         refreshContent();
         refreshPagination();
     }
@@ -70,13 +73,6 @@ async function changeTopic(targetTopic, page = 1, isSearch = false) {
         const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
         errorModal.show();
     }
-    finally {
-        currentSearch = isSearch;
-        currentTopic = isSearch ? currentTopic : targetTopic;
-        currentPage = page;
-        isLoading = false;
-    }
-
 }
 
 
