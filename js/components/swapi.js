@@ -2,7 +2,7 @@ import { topics, keys } from "./dictionaries.js";
 
 export default class Swapi {
 
-    constructor(baseURL = "https://swapi.dev/api", items_per_page = 10) {
+    constructor(baseURL = "https://www.swapi.tech/api", items_per_page = 10) {
         this.baseURL = baseURL;
         this.items_per_page = items_per_page;
     }
